@@ -33,6 +33,10 @@ Then you will receive the following message.
 added 31 packages from 78 contributors and updated 11 packages in 129.321s
 ```
 
+Then You need to choose the account to connect Firebase CLI Login. Type ```firebase login``` and follow the process.
+After that, you will see the message : Firebase CLI Login Successful
+
+
 Once that is done then use the command 'firebase init' to configure the firebase functions in your local environment. Select the following options when initialising the firebase function in the local environment:
 
 1. Which Firebase CLI features do you want to set up for this folder? Press Space to select features, then Enter to confirm your choices => Functions: Configure and deploy Cloud Functions
