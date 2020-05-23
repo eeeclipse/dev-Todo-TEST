@@ -174,4 +174,88 @@ exports.getAllTodos = (request, response) => {
 
 Here we have declared a sample JSON object. Later we will derive that from the Firestore. But for the time being we will return this. Now deploy this to your firebase function using the command firebase deploy. It will ask for permission to delete the module helloworld – just enter y.
 
+## Firebase Firestore
+We will use a firebase firestore as a real-time database for our application. Now go to the Console > Database in Firebase Console. 
+
+
+Ignore the DocumentID key. For the field, type, and value, refer to the JSON down below. Update the value accordingly:
+
+```
+{
+    Field: title,
+    Type: String,
+    Value: Hello World
+},
+{
+    Field: body,
+    Type: String,
+    Value: Hello folks I hope you are staying home...
+},
+{
+    Field: createtAt,
+    type: timestamp,
+    value: Add the current date and time here
+}
+```
+
+
+Press the save button. You will see that the collection and the document is created. Go back to the local environment. We need to install `firebase-admin` which has the firestore package that we need. Use this command to install it:
+
+```
+$ npm i firebase-admin
++ firebase-admin@8.12.1
+```
+
+Create a directory named util under the functions directory. Go to this directory and create a file name admin.js. In this file we will import the firebase admin package and initialize the firestore database object. We will export this so that other modules can use it.
+
+```
+//admin.js
+
+const admin = require('firebase-admin');
+
+admin.initializeApp();
+
+const db = admin.firestore();
+
+module.exports = { admin, db };
+```
+
+Now let’s write an API to fetch this data. Go to the todos.js under the functions > APIs directory. Remove the old code and copy-paste the code below:
+```
+//todos.js
+
+const { db } = require('../util/admin');
+
+exports.getAllTodos = (request, response) => {
+	db
+		.collection('todos')
+		.orderBy('createdAt', 'desc')
+		.get()
+		.then((data) => {
+			let todos = [];
+			data.forEach((doc) => {
+				todos.push({
+                    todoId: doc.id,
+                    title: doc.data().title,
+					body: doc.data().body,
+					createdAt: doc.data().createdAt,
+				});
+			});
+			return response.json(todos);
+		})
+		.catch((err) => {
+			console.error(err);
+			return response.status(500).json({ error: err.code});
+		});
+};
+```
+
+Here we are fetching all the todos from the database and forwarding them to the client in a list.
+
+You can also run the application locally using `firebase serve` command instead of deploying it every time. When you run that command you may get an error regarding credentials. 
+
+
+
+
+
 # Reference
