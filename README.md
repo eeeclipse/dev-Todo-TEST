@@ -133,4 +133,45 @@ Now let’s install the Express framework in our project using the following com
 
 ```npm i express```
 
+Now let's create an APIs directory inside the functions directory. Inside that directory, we will create a file named todos.js. Remove everything from the index.js and then copy-paste the following code:
+
+```
+//index.js
+
+const functions = require('firebase-functions');
+const app = require('express')();
+
+const {
+    getAllTodos
+} = require('./APIs/todos')
+
+app.get('/todos', getAllTodos);
+exports.api = functions.https.onRequest(app);
+```
+
+We have assigned the getAllTodos function to the /todos route. So all the API calls on this route will execute via the getAllTodos function. Now go to the todos.js file under APIs directory and here we will write the getAllTodos function.
+
+```
+//todos.js
+
+exports.getAllTodos = (request, response) => {
+    todos = [
+        {
+            'id': '1',
+            'title': 'greeting',
+            'body': 'Hello world from sharvin shah' 
+        },
+        {
+            'id': '2',
+            'title': 'greeting2',
+            'body': 'Hello2 world2 from sharvin shah' 
+        }
+    ]
+    return response.json(todos);
+}
+```
+
+
+Here we have declared a sample JSON object. Later we will derive that from the Firestore. But for the time being we will return this. Now deploy this to your firebase function using the command firebase deploy. It will ask for permission to delete the module helloworld – just enter y.
+
 # Reference
