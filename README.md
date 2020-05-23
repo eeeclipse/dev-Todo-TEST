@@ -91,4 +91,46 @@ package pre-configured. Functions can be deployed with firebase deploy.
 ✔ Firebase initialization complete!
 ```
 
+Now open the index.js under functions directory and copy-paste the following code:
+```
+const functions = require('firebase-functions');
+
+exports.helloWorld = functions.https.onRequest((request, response) => {
+     response.send("Hello from Firebase!");
+});
+```
+
+
+Deploy the code to firebase functions using the following command:
+
+```
+firebase deploy
+```
+
+Once the deployment is done you will get the following logline at the end of your command line:
+
+```
+> ✔  Deploy complete!
+> Project Console: https://console.firebase.google.com/project/todoapp
+```
+
+Go to the Project Console > Functions and there you will find the URL of the API. The URL will look like this:
+```
+https://<hosting-region>-todoapp-<id>.cloudfunctions.net/helloWorld
+```
+
+Copy this URL and paste it in the browser. You will get the following response:
+
+```
+Hello from Firebase!
+```
+
+This confirms that our Firebase function has been configured properly.
+
+
+## Install the Express Framework:
+Now let’s install the Express framework in our project using the following command:
+
+```npm i express```
+
 # Reference
