@@ -23,7 +23,15 @@ In this section, we are going to develop these elements:
 - Configuring firestore as database.
 
 Install the firebase tools in your machine use the command below:
+
 ```npm install -g firebase-tools```
+
+Then you will receive the following message.
+
+```
++ firebase-tools@8.4.0
+added 31 packages from 78 contributors and updated 11 packages in 129.321s
+```
 
 Once that is done then use the command 'firebase init' to configure the firebase functions in your local environment. Select the following options when initialising the firebase function in the local environment:
 
